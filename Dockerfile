@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     curl \
+    npm \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install ping utility
@@ -35,6 +36,9 @@ RUN chown -R www-data:www-data /var/www/html \
 
 RUN composer install --no-dev --optimize-autoloader
 
+RUN npm install
+
+RUN npm run build
 
 # Expose port 80
 EXPOSE 80
