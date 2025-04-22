@@ -627,6 +627,18 @@ function initClientChannel() {
 }
 initClientChannel();
 
+// Request notification permission on page load
+if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+}
+
+// Function to show browser notification
+function showBrowserNotification(title, options) {
+    if (Notification.permission === "granted") {
+        new Notification(title, options);
+    }
+}
+
 // Listen to messages, and append if data received
 channel.bind("messaging", function (data) {
   if (data.from_id == getMessengerId() && data.to_id == auth_id) {
@@ -644,6 +656,14 @@ channel.bind("messaging", function (data) {
     "new_message",
     !(data.from_id == getMessengerId() && data.to_id == auth_id)
   );
+
+    // Show browser notification
+    if (data.from_id != auth_id) {
+        showBrowserNotification("New Message", {
+            body: "You have received a new message.",
+            icon: "/path/to/icon.png", // Replace with your app's icon path
+        });
+    }
 });
 
 // listen to typing indicator
