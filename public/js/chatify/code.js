@@ -657,11 +657,15 @@ channel.bind("messaging", function (data) {
     !(data.from_id == getMessengerId() && data.to_id == auth_id)
   );
 
-    // Show browser notification
+    // Show browser notification with sender's username
     if (data.from_id != auth_id) {
+        const senderName = $(
+            `.messenger-list-item[data-contact="${data.from_id}"]`
+        ).data("name");
+
         showBrowserNotification("New Message", {
-            body: "You have received a new message.",
-            icon: "/path/to/icon.png", // Replace with your app's icon path
+            body: `You have received a message from ${senderName}`,
+            icon: "/favicon.ico",
         });
     }
 });

@@ -23,7 +23,7 @@
 $lastMessageBody = mb_convert_encoding($lastMessage->body, 'UTF-8', 'UTF-8');
 $lastMessageBody = strlen($lastMessageBody) > 30 ? mb_substr($lastMessageBody, 0, 30, 'UTF-8').'..' : $lastMessageBody;
 ?>
-<table class="messenger-list-item" data-contact="{{ $user->id }}">
+<table class="messenger-list-item" data-contact="{{ $user->id }}" data-name="{{ $user->name }}">
     <tr data-action="0">
         {{-- Avatar side --}}
         <td style="position: relative">
